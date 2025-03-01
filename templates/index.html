@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Traffic Volume Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Traffic Volume Prediction</h2>
+        <form action="/predict" method="post">
+            
+            <!-- Holiday Dropdown -->
+            <label for="holiday">Holiday:</label>
+            <select name="holiday" id="holiday" required>
+                <option value="" disabled selected>Select Holiday</option>
+                {% for h in holidays %}
+                    <option value="{{ h }}">{{ h }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Temperature Input -->
+            <label for="temp">Temperature (Kelvin):</label>
+            <input type="number" id="temp" name="temp" step="0.1" min="260" max="320" 
+                   placeholder="Enter temperature (260-320K)" required>
+
+            <!-- Rain Input -->
+            <label for="rain">Rain (mm):</label>
+            <input type="number" id="rain" name="rain" step="0.1" min="0" max="100" 
+                   placeholder="Enter rainfall (0-100 mm)" required>
+
+            <!-- Snow Input -->
+            <label for="snow">Snow (mm):</label>
+            <input type="number" id="snow" name="snow" step="0.1" min="0" max="50" 
+                   placeholder="Enter snowfall (0-50 mm)" required>
+
+            <!-- Weather Dropdown -->
+            <label for="weather">Weather:</label>
+            <select name="weather" id="weather" required>
+                <option value="" disabled selected>Select Weather Condition</option>
+                {% for w in weather %}
+                    <option value="{{ w }}">{{ w }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Submit Button -->
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+
+        {% if error_text %}
+            <div class="error">{{ error_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
